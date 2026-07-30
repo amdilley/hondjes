@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import * as THREE from "three";
 
 import { useMounted } from "../../hooks/useMounted.tsx";
@@ -10,9 +10,16 @@ export function Scene({ children }: { children: React.ReactNode }) {
   const [camera, setCamera] = useState<THREE.PerspectiveCamera>();
   const [renderer, setRenderer] = useState<THREE.WebGLRenderer>();
   const [scene, setScene] = useState<THREE.Scene>();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const renderScene =
+    camera !== undefined && renderer !== undefined && scene !== undefined;
 
   useMounted(() => {
-    const _renderer = new THREE.WebGLRenderer();
+    const _renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      canvas: canvasRef.current!,
+    });
     const _scene = new THREE.Scene();
     const _camera = new THREE.PerspectiveCamera(
       75,
@@ -22,7 +29,6 @@ export function Scene({ children }: { children: React.ReactNode }) {
     );
 
     _renderer.setSize(window.innerWidth, window.innerWidth);
-    window.document.body.append(_renderer.domElement);
     _camera.position.z = 5;
 
     _renderer.render(_scene, _camera);
@@ -50,13 +56,18 @@ export function Scene({ children }: { children: React.ReactNode }) {
     };
   });
 
-  if (camera === undefined || renderer === undefined || scene === undefined) {
-    return;
-  }
-
   return (
-    <SceneContextProvider camera={camera} renderer={renderer} scene={scene}>
-      {children}
-    </SceneContextProvider>
+    <>
+      <canvas ref={canvasRef} />
+      {renderScene ? (
+        <SceneContextProvider
+          camera={camera!}
+          renderer={renderer!}
+          scene={scene!}
+        >
+          {children}
+        </SceneContextProvider>
+      ) : undefined}
+    </>
   );
 }

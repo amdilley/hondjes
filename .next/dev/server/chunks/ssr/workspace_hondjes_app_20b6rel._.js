@@ -69,15 +69,29 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$app$
 ;
 ;
 ;
-function Cube({ color }) {
+function Cube({ color, position = {} }) {
     const geometry = new __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["BoxGeometry"]();
-    const material = new __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["MeshBasicMaterial"]({
+    const material = new __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["MeshPhongMaterial"]({
         color
     });
     const cube = new __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Mesh"](geometry, material);
     const { camera, renderer, scene } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$app$2f$components$2f$Scene$2f$SceneContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSceneContext"])();
+    if (position.x) {
+        cube.position.x = position.x;
+    }
+    if (position.y) {
+        cube.position.y = position.y;
+    }
+    if (position.z) {
+        cube.position.z = position.z;
+    }
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$app$2f$hooks$2f$useMounted$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMounted"])(()=>{
+        const lightColor = 0xffffff;
+        const intensity = 3;
+        const light = new __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DirectionalLight"](lightColor, intensity);
+        light.position.set(-1, 2, 4);
         scene.add(cube);
+        scene.add(light);
     });
     const rotateCube = ()=>{
         cube.rotation.x += 0.01;
@@ -112,12 +126,16 @@ function Scene({ children }) {
     const [camera, setCamera] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])();
     const [renderer, setRenderer] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])();
     const [scene, setScene] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])();
+    const canvasRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const renderScene = camera !== undefined && renderer !== undefined && scene !== undefined;
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$app$2f$hooks$2f$useMounted$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMounted"])(()=>{
-        const _renderer = new __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["WebGLRenderer"]();
+        const _renderer = new __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["WebGLRenderer"]({
+            antialias: true,
+            canvas: canvasRef.current
+        });
         const _scene = new __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Scene"]();
         const _camera = new __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["PerspectiveCamera"](75, window.innerWidth / window.innerHeight, 0.1, 1000);
         _renderer.setSize(window.innerWidth, window.innerWidth);
-        window.document.body.append(_renderer.domElement);
         _camera.position.z = 5;
         _renderer.render(_scene, _camera);
         const handleResize = ()=>{
@@ -136,19 +154,27 @@ function Scene({ children }) {
             window.removeEventListener("resize", handleResize);
         };
     });
-    if (camera === undefined || renderer === undefined || scene === undefined) {
-        return;
-    }
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$app$2f$components$2f$Scene$2f$SceneContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SceneContextProvider"], {
-        camera: camera,
-        renderer: renderer,
-        scene: scene,
-        children: children
-    }, void 0, false, {
-        fileName: "[project]/workspace/hondjes/app/components/Scene/Scene.tsx",
-        lineNumber: 58,
-        columnNumber: 5
-    }, this);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("canvas", {
+                ref: canvasRef
+            }, void 0, false, {
+                fileName: "[project]/workspace/hondjes/app/components/Scene/Scene.tsx",
+                lineNumber: 61,
+                columnNumber: 7
+            }, this),
+            renderScene ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$workspace$2f$hondjes$2f$app$2f$components$2f$Scene$2f$SceneContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SceneContextProvider"], {
+                camera: camera,
+                renderer: renderer,
+                scene: scene,
+                children: children
+            }, void 0, false, {
+                fileName: "[project]/workspace/hondjes/app/components/Scene/Scene.tsx",
+                lineNumber: 63,
+                columnNumber: 9
+            }, this) : undefined
+        ]
+    }, void 0, true);
 }
 }),
 ];
