@@ -20,6 +20,9 @@
     "jsx": "react-jsx",
     "allowJs": true,
     "incremental": true,
+    "paths": {
+      "@/*": ["./lib/*"]
+    },
     "plugins": [
       {
         "name": "next"

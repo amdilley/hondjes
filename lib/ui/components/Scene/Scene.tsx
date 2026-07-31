@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import * as THREE from "three";
 
-import { useMounted } from "../../hooks/useMounted.tsx";
+import { useMounted } from "@/hooks/useMounted.tsx";
 import { SceneContextProvider } from "./SceneContext.tsx";
 
 export function Scene({ children }: { children: React.ReactNode }) {
