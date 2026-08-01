@@ -1,10 +1,13 @@
-FROM ghcr.io/nubjs/nub:0.6.0
+FROM node:26-slim
+RUN npm install -g @nubjs/nub
 
-COPY --chown=node:node package.json package-lock.json ./
+WORKDIR /app
+
+COPY . .
+
 RUN nub ci
-
-COPY --chown=node:node . .
+RUN nub run build
 
 EXPOSE 8080
 
-CMD ["nub", "run", "start:build"]
+CMD ["nub", "run", "start"]
