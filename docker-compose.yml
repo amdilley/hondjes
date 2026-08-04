@@ -6,3 +6,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+
+  postgres:
+    image: pgvector/pgvector:pg18
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5431:5432"

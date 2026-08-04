@@ -3,8 +3,8 @@
 import { useRef, useState } from "react";
 import * as THREE from "three";
 
-import { useMounted } from "@/hooks/useMounted.tsx";
-import { SceneContextProvider } from "./SceneContext.tsx";
+import { useMounted } from "@/hooks/useMounted";
+import { SceneContextProvider } from "./SceneContext";
 
 export function Scene({ children }: { children: React.ReactNode }) {
   const [camera, setCamera] = useState<THREE.PerspectiveCamera>();

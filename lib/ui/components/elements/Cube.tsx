@@ -2,9 +2,9 @@
 
 import * as THREE from "three";
 
-import { useSceneContext } from "../Scene/SceneContext.tsx";
-import type { Position } from "../types.ts";
-import { useMounted } from "@/hooks/useMounted.tsx";
+import { useSceneContext } from "../Scene/SceneContext";
+import type { Position } from "../types";
+import { useMounted } from "@/hooks/useMounted";
 
 type Props = {
   color: THREE.ColorRepresentation;

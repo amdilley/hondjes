@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { describe, it, expect } from "vitest";
-import { flip, flipX, flipY, flipZ } from "./flip.ts";
+import { flip, flipX, flipY, flipZ } from "./flip";
 
 describe("flip", () => {
   it("should invert object along each specified axis", () => {

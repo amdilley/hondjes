@@ -1,6 +1,6 @@
-import { Cube } from "@/ui/components/elements/Cube.tsx";
-import { LightSource } from "@/ui/components/LightSource/LightSouce.tsx";
-import { Scene } from "@/ui/components/Scene/Scene.tsx";
+import { Cube } from "@/ui/components/elements/Cube";
+import { LightSource } from "@/ui/components/LightSource/LightSouce";
+import { Scene } from "@/ui/components/Scene/Scene";
 
 export default function Page() {
   return (
