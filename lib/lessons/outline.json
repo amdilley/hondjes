@@ -1,0 +1,16 @@
+[
+  {
+    "text": "Hallo",
+    "path": "/hallo",
+    "sections": [
+      {
+        "text": "Hoe heet je?",
+        "path": "/hoe-heet-je"
+      },
+      {
+        "text": "Hoe gaat het?",
+        "path": "/hoe-gaat-het"
+      }
+    ]
+  }
+]
