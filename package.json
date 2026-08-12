@@ -2,11 +2,11 @@
   "name": "hondjes",
   "version": "0.0.1",
   "type": "module",
-  "packageManager": "nub@0.6.0",
+  "packageManager": "nub@0.7.5",
   "devEngines": {
     "packageManager": {
       "name": "nub",
-      "version": "^0.6.0",
+      "version": "^0.7.5",
       "onFail": "warn"
     }
   },
@@ -45,7 +45,8 @@
     "next": "^16.2.12",
     "postgres": "^3.4.9",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "react-qr-code": "^2.2.0"
   },
   "engines": {
     "node": ">=26.5.1"

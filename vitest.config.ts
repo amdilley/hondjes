@@ -1,3 +1,4 @@
+import path from "node:path";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -38,6 +39,12 @@ export default defineConfig({
         functions: 90,
         lines: 90,
       },
+    },
+  },
+
+  resolve: {
+    alias: {
+      "@": path.resolve(import.meta.dirname, "./lib"),
     },
   },
 });
