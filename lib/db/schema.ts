@@ -1,6 +1,13 @@
-import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  index,
+  numeric,
+  pgTable,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 
-// IMPORTANT! ID fields should ALWAYS use UUID types, EXCEPT the BetterAuth tables.
+/* Auth tables */
 
 export const user = pgTable(
   "user",
@@ -67,3 +74,40 @@ export const account = pgTable(
     index("account_provider_account_idx").on(table.providerId, table.accountId),
   ],
 );
+
+/* Pet search tables */
+
+export const pet = pgTable("pet", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description"),
+  ownerId: text("owner_id")
+    .notNull()
+    .references(() => user.id),
+});
+
+export const petSearch = pgTable("pet_search", {
+  id: text("id").primaryKey(),
+  petId: text("pet_id")
+    .notNull()
+    .references(() => pet.id),
+  status: text("status"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
+});
+
+export const petSighting = pgTable("pet_sighting", {
+  id: text("id").primaryKey(),
+  petSearchId: text("pet_search_id")
+    .notNull()
+    .references(() => petSearch.id, { onDelete: "cascade" }),
+  lat: numeric("lat").notNull(),
+  lng: numeric("lng").notNull(),
+  description: text("description"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
+});
