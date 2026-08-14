@@ -31,7 +31,12 @@ export default defineConfig({
       // - the coverage report numbers are partially wrong because some tests didn't finish
       reportOnFailure: false,
 
-      exclude: ["**/*.config.[jt]s", "**/*.setupFiles.ts", "**/types.ts"],
+      exclude: [
+        "**/*.config.[jt]s",
+        "**/*.setupFiles.ts",
+        "**/types.ts",
+        "lib/types/*.ts",
+      ],
 
       thresholds: {
         statements: 90,
