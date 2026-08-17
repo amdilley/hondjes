@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import { expect, it } from "vitest";
-import MissingPetPage from "./page";
+import FindPetPage from "./page";
 import { renderServerComponent } from "@/test-util/renderServerComponent";
 
 it("should render a QR code", async () => {
@@ -8,10 +8,10 @@ it("should render a QR code", async () => {
     id: "1234567",
   });
 
-  await renderServerComponent(<MissingPetPage params={params} />);
+  await renderServerComponent(<FindPetPage params={params} />);
 
   const qrCodeWrapper = screen.getByLabelText(
-    "http://localhost:3000/m/1234567",
+    "http://localhost:3000/find/1234567",
   );
 
   expect(qrCodeWrapper.querySelector("svg")).toBeDefined();
