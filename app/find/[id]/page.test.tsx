@@ -11,7 +11,7 @@ it("should render a QR code", async () => {
   await renderServerComponent(<FindPetPage params={params} />);
 
   const qrCodeWrapper = screen.getByLabelText(
-    "http://localhost:3000/find/1234567",
+    "https://localhost:3000/find/1234567",
   );
 
   expect(qrCodeWrapper.querySelector("svg")).toBeDefined();

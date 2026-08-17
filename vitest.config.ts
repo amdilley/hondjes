@@ -36,6 +36,7 @@ export default defineConfig({
         "**/*.setupFiles.ts",
         "**/types.ts",
         "lib/types/*.ts",
+        "lib/ui/components/TrackerMap/locations.ts",
       ],
 
       thresholds: {

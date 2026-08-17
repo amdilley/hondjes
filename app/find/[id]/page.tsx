@@ -15,6 +15,7 @@ export default async function Page({ params }: Props) {
     <div>
       <ClientOnly>
         <TrackerMap
+          title="Recent sightings"
           markers={[
             {
               id: "12345",
