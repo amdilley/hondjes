@@ -3,8 +3,13 @@ import type { Position } from "@/types/map";
 /**
  * Gets the center of a set of positions on a sphere.
  */
-export function getCenter(positions: Position[]): Position {
+export function getCenter(positions: Position[]): Position | undefined {
   const numPositions = positions.length;
+
+  if (numPositions === 0) {
+    return undefined;
+  }
+
   let [x, y, z] = [0, 0, 0];
 
   // convert each point to 3D cartesian coordinates

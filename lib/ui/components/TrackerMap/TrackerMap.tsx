@@ -1,12 +1,13 @@
 "use client";
 
-import * as L from "leaflet";
+import L from "leaflet";
 import { useId, useRef } from "react";
 
 import { useMounted } from "@/hooks/useMounted";
 import type { MapMarker, Position } from "@/types/map";
+import { getCenter } from "@/util/getCenter";
 
-import { default as locations } from "./locations";
+import locations from "./locations";
 
 import "leaflet/dist/leaflet.css";
 
@@ -22,7 +23,7 @@ type Props = {
 export function TrackerMap({
   title,
   markers,
-  initialCenter = locations.AMSTERDAM,
+  initialCenter,
   width = 600,
   height = 400,
   className = "tracker-map__container",
@@ -30,11 +31,17 @@ export function TrackerMap({
   const id = useId();
   const ref = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map>(undefined);
+  const positions = markers.map((m) => m.position);
+  const center =
+    (initialCenter ?? positions.length > 0)
+      ? getCenter(positions)
+      : locations.AMSTERDAM;
 
   useMounted(() => {
+    /* v8 ignore next */
     if (ref.current && !mapRef.current) {
       mapRef.current = L.map(ref.current, {
-        center: initialCenter,
+        center,
         zoom: 13,
       });
 

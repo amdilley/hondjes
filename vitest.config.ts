@@ -35,6 +35,8 @@ export default defineConfig({
         "**/*.config.[jt]s",
         "**/*.setupFiles.ts",
         "**/types.ts",
+        "lib/db/*.ts",
+        "lib/services/pet/index.ts",
         "lib/types/*.ts",
         "lib/ui/components/TrackerMap/locations.ts",
       ],
