@@ -1,9 +1,13 @@
 import type { NextRequest } from "next/server";
-import { expect, it, vi } from "vitest";
+import { beforeEach, expect, it, vi } from "vitest";
 
 import * as API from "@/services/pet";
 
 import { GET } from "./route";
+
+beforeEach(() => {
+  vi.restoreAllMocks();
+});
 
 it("returns error when POSTGRES_URL isn't set", async () => {
   vi.stubEnv("POSTGRES_URL", undefined);
@@ -45,11 +49,15 @@ it("returns error when getPetById throws", async () => {
 });
 
 it("returns pet from db", async () => {
+  const d = new Date();
   const mockPet = {
     id: "12345",
     name: "Boots",
     ownerId: "54321",
     description: "Fluffy and cute",
+    imageUrl: null,
+    createdAt: d,
+    updatedAt: d,
   };
 
   vi.spyOn(API, "getPetById").mockImplementation((_id: string) =>
@@ -60,5 +68,9 @@ it("returns pet from db", async () => {
     params: Promise.resolve({ id: "12345" }),
   }).then((r) => r.json());
 
-  await expect(result).resolves.toEqual(mockPet);
+  await expect(result).resolves.toEqual({
+    ...mockPet,
+    createdAt: d.toISOString(),
+    updatedAt: d.toISOString(),
+  });
 });

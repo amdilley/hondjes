@@ -17,6 +17,14 @@ it("should reject after timeout with provided error message", async () => {
   ).rejects.toEqual(new Error("Took too long"));
 });
 
+it("should reject within the timeout", async () => {
+  const p = new Promise((_res, rej) => setTimeout(rej, 10, "Error"));
+
+  await expect(
+    withTimeout(p, { timeout: 30, timeoutError: "Took too long" }),
+  ).rejects.toEqual("Error");
+});
+
 it("should resolve within the timeout", async () => {
   const awaitedValue = 42;
   const p = new Promise((res) => setTimeout(res, 10, awaitedValue));

@@ -84,6 +84,11 @@ export const pet = pgTable("pet", {
   ownerId: text("owner_id")
     .notNull()
     .references(() => user.id),
+  imageUrl: text("image_url"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
 });
 
 export const petSearch = pgTable("pet_search", {
