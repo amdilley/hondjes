@@ -1,9 +1,11 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { db } from "../db";
+
+import { db } from "@/db";
+import { getEnvValue } from "@/util/getEnvValue";
 
 export const auth = betterAuth({
-  baseURL: process.env.BETTER_AUTH_URL,
+  baseURL: getEnvValue("BETTER_AUTH_URL"),
   database: drizzleAdapter(db, {
     provider: "pg",
   }),
@@ -30,8 +32,8 @@ export const auth = betterAuth({
   socialProviders: {
     google: {
       prompt: "select_account",
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: getEnvValue("GOOGLE_CLIENT_ID"),
+      clientSecret: getEnvValue("GOOGLE_CLIENT_SECRET"),
     },
   },
 });

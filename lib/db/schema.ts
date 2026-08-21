@@ -79,7 +79,7 @@ export const account = pgTable(
 
 export const pet = pgTable("pet", {
   id: text("id").primaryKey(),
-  name: text("name").notNull(),
+  name: text("name"),
   description: text("description"),
   ownerId: text("owner_id")
     .notNull()

@@ -35,6 +35,7 @@ export default defineConfig({
         "**/*.config.[jt]s",
         "**/*.setupFiles.ts",
         "**/types.ts",
+        "lib/auth/*.ts",
         "lib/db/*.ts",
         "lib/services/pet/index.ts",
         "lib/types/*.ts",
