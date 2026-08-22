@@ -120,4 +120,5 @@ export const petSighting = pgTable("pet_sighting", {
 });
 
 export type Pet = NullToUndefined<typeof pet.$inferSelect>;
+export type Session = NullToUndefined<typeof session.$inferSelect>;
 export type User = NullToUndefined<typeof user.$inferSelect>;

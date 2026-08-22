@@ -3,8 +3,9 @@ import assert from "node:assert";
 import crypto from "node:crypto";
 
 import { db } from "@/db";
-import { pet as petTable } from "@/db/schema";
+import { pet as petTable, type Pet } from "@/db/schema";
 import { getEnvValue } from "@/util/getEnvValue";
+import { nullToUndefined } from "@/util/nullToUndefined";
 
 export async function createPet(ownerId: string) {
   assert.ok(getEnvValue("POSTGRES_URL"));
@@ -21,5 +22,5 @@ export async function getPetById(id: string) {
 
   const pets = await db.select().from(petTable).where(eq(petTable.id, id));
 
-  return pets?.[0];
+  return nullToUndefined(pets?.[0]) as Pet;
 }
