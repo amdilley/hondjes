@@ -5,76 +5,54 @@ import { expect, it, vi } from "vitest";
 import { ImageUpload } from "./ImageUpload";
 
 it("should upload selected image file", async () => {
-  const fetchSpy = vi.fn();
-  const successSpy = vi.fn();
+  const uploadSpy = vi.fn();
   const image = new File(["ヽ(^o^)ρ┳┻┳°σ(^o^)/"], "pp.png", {
     type: "image/png",
   });
-  const formData = new FormData();
 
-  formData.append("image", image);
+  render(<ImageUpload name="image" label="Image" onUpload={uploadSpy} />);
 
-  render(
-    <ImageUpload
-      uploadPath="/api/profile"
-      fetcher={fetchSpy}
-      onSuccess={successSpy}
-    />,
-  );
-
-  const input = screen.getByRole("button");
+  const input = screen.getByRole<HTMLInputElement>("button");
 
   await userEvent.upload(input, image);
 
-  expect(fetchSpy).toHaveBeenCalledTimes(1);
-  expect(fetchSpy).toHaveBeenNthCalledWith(1, "/api/profile", {
-    method: "POST",
-    body: formData,
-  });
-
-  expect(successSpy).toHaveBeenCalledTimes(1);
+  expect(uploadSpy).toHaveBeenCalledTimes(1);
+  expect(uploadSpy).toHaveBeenNthCalledWith(1, image);
 });
 
 it("should fail if image size exceeds max specified", async () => {
-  const exceedSpy = vi.fn();
   const image = new File(["ヽ(^o^)ρ┳┻┳°σ(^o^)/"], "pp.png", {
     type: "image/png",
   });
 
-  render(
-    <ImageUpload
-      uploadPath="/api/profile"
-      maxSize={image.size - 1}
-      onExceedMaxSize={exceedSpy}
-    />,
-  );
+  render(<ImageUpload name="image" label="Image" maxSize={image.size - 1} />);
 
   const input = screen.getByRole("button");
 
+  expect(input.ariaInvalid).toBe("false");
+  expect(screen.queryByText("File too big")).toBeNull();
+
   await userEvent.upload(input, image);
 
-  expect(exceedSpy).toHaveBeenCalledTimes(1);
+  expect(input.ariaInvalid).toBe("true");
+  screen.getByText("File too big");
 });
 
-it("should fail if fetcher rejects", async () => {
-  const fetcherSpy = vi.fn(() => Promise.reject("Upload failed"));
-  const errorSpy = vi.fn();
-  const image = new File(["ヽ(^o^)ρ┳┻┳°σ(^o^)/"], "pp.png", {
-    type: "image/png",
-  });
-
+it("should render image if url provided", () => {
   render(
     <ImageUpload
-      uploadPath="/api/profile"
-      fetcher={fetcherSpy}
-      onError={errorSpy}
+      name="image"
+      label="Image"
+      image="/pp.png"
+      imageAlt="ping pong emoji"
     />,
   );
 
-  const input = screen.getByRole("button");
+  screen.getByRole("img", { name: "ping pong emoji" });
+});
 
-  await userEvent.upload(input, image);
+it("should render image with default alt text if none provided", () => {
+  render(<ImageUpload name="image" label="Image" image="/pp.png" />);
 
-  expect(errorSpy).toHaveBeenCalledTimes(1);
-  expect(errorSpy).toHaveBeenNthCalledWith(1, "Upload failed");
+  screen.getByRole("img", { name: "image" });
 });

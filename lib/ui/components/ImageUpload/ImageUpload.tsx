@@ -1,20 +1,26 @@
+import Image from "next/image";
+import { useId, useState } from "react";
+
 type Props = {
-  uploadPath: string;
+  name: string;
+  label: string;
+  image?: string | undefined;
+  imageAlt?: string | undefined;
   maxSize?: number;
-  fetcher?: typeof fetch;
-  onSuccess?: (response: Response) => void;
-  onError?: (error: unknown) => void;
-  onExceedMaxSize?: () => void;
+  onUpload?: (file: File) => void;
 };
 
 export function ImageUpload({
-  uploadPath,
+  name,
+  label,
+  image,
+  imageAlt,
   maxSize = 1024 * 1024 * 5, // 5MB
-  fetcher = fetch,
-  onError,
-  onExceedMaxSize,
-  onSuccess,
+  onUpload,
 }: Props) {
+  const [hasError, setHasError] = useState(false);
+  const errorId = useId();
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files?.[0];
 
@@ -24,34 +30,33 @@ export function ImageUpload({
     }
 
     if (file.size > maxSize) {
-      onExceedMaxSize?.();
+      setHasError(true);
       return;
     }
 
-    const formData = new FormData();
-
-    formData.append("image", file);
-
-    try {
-      const response = await fetcher(uploadPath, {
-        method: "POST",
-        body: formData,
-      });
-
-      onSuccess?.(response);
-    } catch (error) {
-      onError?.(error);
-    }
+    setHasError(false);
+    onUpload?.(file);
   };
 
   return (
-    <form>
+    <div className="image-loader__wrapper">
+      <label htmlFor={name}>{label}</label>
+      {image && <Image src={image} alt={imageAlt ?? "image"} fill />}
       <input
+        id={name}
+        name={name}
         type="file"
         accept="image/*"
         role="button"
+        aria-invalid={hasError}
+        aria-errormessage={errorId}
         onChange={handleImageUpload}
       />
-    </form>
+      {hasError && (
+        <span id={errorId} className="input__error">
+          File too big
+        </span>
+      )}
+    </div>
   );
 }

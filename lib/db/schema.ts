@@ -7,6 +7,8 @@ import {
   timestamp,
 } from "drizzle-orm/pg-core";
 
+import type { NullToUndefined } from "@/types/common";
+
 /* Auth tables */
 
 export const user = pgTable(
@@ -116,3 +118,6 @@ export const petSighting = pgTable("pet_sighting", {
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
 });
+
+export type Pet = NullToUndefined<typeof pet.$inferSelect>;
+export type User = NullToUndefined<typeof user.$inferSelect>;
