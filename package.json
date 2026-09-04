@@ -2,11 +2,11 @@
   "name": "hondjes",
   "version": "0.0.1",
   "type": "module",
-  "packageManager": "nub@0.7.5",
+  "packageManager": "nub@0.8.3",
   "devEngines": {
     "packageManager": {
       "name": "nub",
-      "version": "^0.7.5",
+      "version": "^0.8.3",
       "onFail": "warn"
     }
   },
@@ -16,8 +16,6 @@
     "start": "next start",
     "start:build": "next build && next start",
     "install": "nub install --node-linker hoisted",
-    "lint": "eslint",
-    "lint:fix": "eslint --fix",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
@@ -54,7 +52,7 @@
     "react-qr-code": "^2.2.0"
   },
   "engines": {
-    "node": ">=26.5.1"
+    "node": ">=26.8.1"
   },
   "allowBuilds": {
     "sharp": true
